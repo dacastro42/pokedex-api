@@ -1,9 +1,6 @@
---
--- Table structure for table `elementos`
---
-DROP TABLE IF EXISTS `elementos`;
+USE pokedex_v2;
 
-CREATE TABLE `elementos` (
+CREATE TABLE elementos (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
   `descripcion` varchar(255) NOT NULL,
@@ -12,12 +9,7 @@ CREATE TABLE `elementos` (
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
---
--- Table structure for table `estadisticas`
---
-DROP TABLE IF EXISTS `estadisticas`;
-
-CREATE TABLE `estadisticas` (
+CREATE TABLE estadisticas (
   `id` int NOT NULL AUTO_INCREMENT,
   `hp` int NOT NULL,
   `ataque` int NOT NULL,
@@ -31,12 +23,7 @@ CREATE TABLE `estadisticas` (
   CONSTRAINT `FK_c4cf7b26a1e52c6bafacc99f045` FOREIGN KEY (`pokemon_id`) REFERENCES `pokemons` (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
---
--- Table structure for table `evoluciones`
---
-DROP TABLE IF EXISTS `evoluciones`;
-
-CREATE TABLE `evoluciones` (
+CREATE TABLE evoluciones (
   `id` int NOT NULL AUTO_INCREMENT,
   `nivel_evolucion` int NOT NULL,
   `metodo` varchar(255) NOT NULL,
@@ -49,35 +36,20 @@ CREATE TABLE `evoluciones` (
   CONSTRAINT `FK_19916f03e8ebcd152b6f51a06d3` FOREIGN KEY (`pokemon_id`) REFERENCES `pokemons` (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
---
--- Table structure for table `generaciones`
---
-DROP TABLE IF EXISTS `generaciones`;
-
-CREATE TABLE `generaciones` (
+CREATE TABLE generaciones (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
---
--- Table structure for table `habilidades`
---
-DROP TABLE IF EXISTS `habilidades`;
-
-CREATE TABLE `habilidades` (
+CREATE TABLE habilidades (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
   `descripcion` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
---
--- Table structure for table `interacciones`
---
-DROP TABLE IF EXISTS `interacciones`;
-
-CREATE TABLE `interacciones` (
+CREATE TABLE interacciones (
   `id` int NOT NULL AUTO_INCREMENT,
   `efecto` varchar(255) NOT NULL,
   `elemento_origen_id` int NOT NULL,
@@ -89,12 +61,7 @@ CREATE TABLE `interacciones` (
   CONSTRAINT `FK_e58da14885e64ac81aba7cd876b` FOREIGN KEY (`elemento_origen_id`) REFERENCES `elementos` (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
---
--- Table structure for table `movimientos`
---
-DROP TABLE IF EXISTS `movimientos`;
-
-CREATE TABLE `movimientos` (
+CREATE TABLE movimientos (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
   `potencia` int NOT NULL,
@@ -106,12 +73,7 @@ CREATE TABLE `movimientos` (
   CONSTRAINT `FK_9f7da39e7f0e6e522503cadeb33` FOREIGN KEY (`elemento_id`) REFERENCES `elementos` (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
---
--- Table structure for table `pokemons`
---
-DROP TABLE IF EXISTS `pokemons`;
-
-CREATE TABLE `pokemons` (
+CREATE TABLE pokemons (
   `id` int NOT NULL AUTO_INCREMENT,
   `numero` int NOT NULL,
   `nombre` varchar(50) NOT NULL,
@@ -122,12 +84,7 @@ CREATE TABLE `pokemons` (
   CONSTRAINT `FK_324a0ca38aefbeea6069142dccb` FOREIGN KEY (`generacion_id`) REFERENCES `generaciones` (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
---
--- Table structure for table `pokemons_elementos`
---
-DROP TABLE IF EXISTS `pokemons_elementos`;
-
-CREATE TABLE `pokemons_elementos` (
+CREATE TABLE pokemons_elementos (
   `id` int NOT NULL AUTO_INCREMENT,
   `pokemon_id` int NOT NULL,
   `elemento_id` int NOT NULL,
@@ -138,12 +95,7 @@ CREATE TABLE `pokemons_elementos` (
   CONSTRAINT `FK_c7ca20abc571ebafba918a6366e` FOREIGN KEY (`pokemon_id`) REFERENCES `pokemons` (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
 
---
--- Table structure for table `pokemons_habilidades`
---
-DROP TABLE IF EXISTS `pokemons_habilidades`;
-
-CREATE TABLE `pokemons_habilidades` (
+CREATE TABLE pokemons_habilidades (
   `pokemon_id` int NOT NULL,
   `habilidad_id` int NOT NULL,
   PRIMARY KEY (`pokemon_id`, `habilidad_id`),

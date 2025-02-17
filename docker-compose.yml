@@ -29,13 +29,11 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE:-pokedex}
       MYSQL_USER: ${DB_USER:?err}
       MYSQL_PASSWORD: ${DB_PASSWORD:?err}
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?err}
     volumes:
       - db_data:/var/lib/mysql/:rw
       - ./database:/docker-entrypoint-initdb.d/:ro
     restart: always
-    security_opt:
-      - seccomp:unconfined
     networks:
       - pokedex_net
     healthcheck:
@@ -43,8 +41,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
 
 networks:
   pokedex_net:

@@ -1,0 +1,9 @@
+export { Elemento } from "./elemento.entity";
+export { Estadistica } from "./estadisticas.entity";
+export { Evolucion } from "./evoluciones.entity";
+export { Generaciones } from "./generaciones.entity";
+export { Habilidad } from "./habilidades.entity";
+export { Interaccion } from "./interacciones.entity";
+export { Movimiento } from "./movimientos.entity";
+export { Pokemon } from "./pokemon.entity";
+export { PokemonElemento } from "./pokemon-elementos.entity";

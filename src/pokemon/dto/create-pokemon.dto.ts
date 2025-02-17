@@ -1,7 +1,12 @@
+export class CreateHabilidadDto {
+  nombre: string;
+  descripcion: string;
+}
+
 export class CreatePokemonDto {
-  numeropokemon: number;
-  nombrePokemon: string;
-  iconoPokemon?: Buffer; // Imagen opcional
-  nombrePokemonJapones?: string;
-  idgeneracionf: number;
+  numero: number;
+  nombre: string;
+  nombreJapones?: string;
+  generacionId: number;
+  habilidades?: CreateHabilidadDto[];
 }

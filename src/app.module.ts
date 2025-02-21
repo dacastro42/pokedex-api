@@ -3,6 +3,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
 import * as Entities from "./common/entities";
 import { PokemonModule } from "./pokemon/pokemon.module";
+import { ElementoModule } from './elemento/elemento.module';
+import { Elemento } from './common/entities/elemento.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -19,6 +21,7 @@ import { PokemonModule } from "./pokemon/pokemon.module";
       synchronize: true, // Solo para desarrollo
     }),
     PokemonModule,
+    ElementoModule,
   ],
 })
 export class AppModule {}

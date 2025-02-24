@@ -5,6 +5,8 @@ import * as Entities from "./common/entities";
 import { PokemonModule } from "./pokemon/pokemon.module";
 import { ElementoModule } from './elemento/elemento.module';
 import { Elemento } from './common/entities/elemento.entity';
+import { HabilidadModule } from './habilidad/habilidad.module';
+import { Habilidad } from './common/entities/habilidades.entity';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -22,6 +24,7 @@ import { Elemento } from './common/entities/elemento.entity';
     }),
     PokemonModule,
     ElementoModule,
+    HabilidadModule,
   ],
 })
 export class AppModule {}

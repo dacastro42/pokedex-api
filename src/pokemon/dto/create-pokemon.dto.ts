@@ -9,4 +9,6 @@ export class CreatePokemonDto {
   nombreJapones?: string;
   generacionId: number;
   habilidades?: CreateHabilidadDto[];
+  habilidadesNuevas?: CreateHabilidadDto[];  // Habilidades nuevas
+  habilidadesExistentes?: number[];   
 }

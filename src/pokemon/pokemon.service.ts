@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { In, Repository } from "typeorm";
 import { CreatePokemonDto } from "./dto/create-pokemon.dto";
 import { UpdatePokemonDto } from "./dto/update-pokemon.dto";
 import { Habilidad, Pokemon } from "src/common/entities";
@@ -15,14 +15,36 @@ export class PokemonService {
   ) {}
 
   async create(dto: CreatePokemonDto): Promise<Pokemon> {
-    const { habilidades } = dto;
+    const { habilidadesNuevas, habilidadesExistentes } = dto;//const { habilidades } = dto;
+    let habilidadesRelacionadas: Habilidad[] = [];
 
-    if (habilidades) {
-      dto.habilidades = this.habilidadRepository.create(habilidades);
-    }
+// Si hay habilidades existentes, obtenerlas de la BD
+if (habilidadesExistentes && habilidadesExistentes.length > 0) {
+  habilidadesRelacionadas = await this.habilidadRepository.find({
+    where: { id: In(habilidadesExistentes) },
+  });
+}
 
-    const pokemon = this.pokemonRepository.create(dto);
-    return this.pokemonRepository.save(pokemon);
+// Si hay habilidades nuevas, crearlas y agregarlas
+if (habilidadesNuevas && habilidadesNuevas.length > 0) {
+  const nuevasHabilidades = this.habilidadRepository.create(habilidadesNuevas);
+  const habilidadesGuardadas = await this.habilidadRepository.save(nuevasHabilidades);
+  habilidadesRelacionadas = [...habilidadesRelacionadas, ...habilidadesGuardadas];
+}
+// Crear el Pokémon con las habilidades relacionadas
+const pokemon = this.pokemonRepository.create({
+  ...dto,
+  habilidades: habilidadesRelacionadas,
+});
+
+return this.pokemonRepository.save(pokemon);
+
+    //if (habilidades) {
+     // dto.habilidades = this.habilidadRepository.create(habilidades);
+    //}
+
+    //const pokemon = this.pokemonRepository.create(dto);
+    //return this.pokemonRepository.save(pokemon);
   }
 
   async findAll(): Promise<Pokemon[]> {

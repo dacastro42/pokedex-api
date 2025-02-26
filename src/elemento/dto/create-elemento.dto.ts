@@ -4,3 +4,8 @@ export class CreateElementoDto {
     color: string;
     efectoClima?: string; // Opcional
   }
+
+  //export class CreatePokemonElementoDto {
+  //  elementosNuevos?: CreateElementoDto[];
+   // elementosExistentes?: number[];
+//}

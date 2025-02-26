@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { In, Repository } from "typeorm";
 import { Elemento } from "src/common/entities/elemento.entity";
 import { CreateElementoDto } from "./dto/create-elemento.dto";
 import { UpdateElementoDto } from "./dto/update-elemento.dto";
@@ -33,6 +33,25 @@ export class ElementoService {
       throw new NotFoundException(`Elemento con id ${id} no encontrado`);
     }
     return elemento;
+  }
+
+
+  async createOrFindElements(elementosNuevos?: CreateElementoDto[], elementosExistentes?: number[]): Promise<Elemento[]> {
+    let elementosRelacionados: Elemento[] = [];
+  
+    if (elementosExistentes && elementosExistentes.length > 0) {
+      elementosRelacionados = await this.elementoRepository.find({
+        where: { id: In(elementosExistentes) },
+      });
+    }
+  
+    if (elementosNuevos && elementosNuevos.length > 0) {
+      const nuevosElementos = this.elementoRepository.create(elementosNuevos);
+      const elementosGuardados = await this.elementoRepository.save(nuevosElementos);
+      elementosRelacionados = [...elementosRelacionados, ...elementosGuardados];
+    }
+  
+    return elementosRelacionados;
   }
 
   async update(id: number, updateElementoDto: UpdateElementoDto): Promise<Elemento> {

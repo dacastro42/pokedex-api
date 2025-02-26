@@ -14,6 +14,7 @@ import { Estadistica } from "./estadisticas.entity";
 import { Evolucion } from "./evoluciones.entity";
 import { Habilidad } from "./habilidades.entity";
 import { PokemonElemento } from "./pokemon-elementos.entity";
+import { Elemento } from "./elemento.entity";
 
 @Entity("pokemons")
 export class Pokemon {
@@ -51,6 +52,17 @@ export class Pokemon {
     inverseJoinColumn: { name: "habilidad_id", referencedColumnName: "id" }, // inverseJoinColumn es la tabla de la relacion
   })
   habilidades: Habilidad[];
+
+  // 🔥 Agregamos la relación correcta con `Elementos`
+  @ManyToMany(() => Elemento, (elemento) => elemento.pokemonElemento, {
+    cascade: ["insert", "update"],
+  })
+  @JoinTable({
+    name: "pokemons_elementos", // Nombre de la tabla intermedia
+    joinColumn: { name: "pokemon_id", referencedColumnName: "id" },
+    inverseJoinColumn: { name: "elemento_id", referencedColumnName: "id" },
+  })
+  elementos: Elemento[];
 
   @OneToMany(
     () => PokemonElemento,
